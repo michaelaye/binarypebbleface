@@ -164,7 +164,7 @@ void handle_init(AppContextRef ctx) {
   text_layer_init(&text_wk_layer, window.layer.frame);
   text_layer_set_text_color(&text_wk_layer, GColorWhite);
   text_layer_set_background_color(&text_wk_layer, GColorClear);
-  layer_set_frame(&text_wk_layer.layer, GRect(130, 22, 144-50, 44));
+  layer_set_frame(&text_wk_layer.layer, GRect(100, 12, 144-2, 24));
   text_layer_set_font(&text_wk_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
   layer_add_child(&window.layer, &text_wk_layer.layer);
 
