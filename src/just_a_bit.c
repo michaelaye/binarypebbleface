@@ -19,9 +19,11 @@ Window window;
 
 Layer display_layer;
 TextLayer text_date_layer;
-TextLayer text_daywk_layer;
+TextLayer text_day_layer;
+TextLayer text_wk_layer;
 static char date_text[] = "Xxxxxxxxx 00";
-static char daywk_text[] = "Xxxxxxxxx 00";
+static char day_text[] = "Xxxxxxxxx 00";
+static char wk_text[] = "wk00";
 
 #define CIRCLE_RADIUS 12
 #define CIRCLE_LINE_THICKNESS 2
@@ -124,8 +126,10 @@ void update_watchface(PblTm* t) {
 	
     string_format_time(date_text, sizeof(date_text), "%B %e", t);
     text_layer_set_text(&text_date_layer, date_text);
-	string_format_time(daywk_text, sizeof(daywk_text), "%A wk%V", t);
-	text_layer_set_text(&text_daywk_layer, daywk_text);
+	string_format_time(day_text, sizeof(day_text), "%A", t);
+	text_layer_set_text(&text_day_layer, day_text);
+	string_format_time(wk_text, sizeof(day_text), "wk%V", t);
+	text_layer_set_text(&text_wk_layer, wk_text);
 	
 }
 
@@ -150,12 +154,19 @@ void handle_init(AppContextRef ctx) {
   text_layer_set_font(&text_date_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
   layer_add_child(&window.layer, &text_date_layer.layer);
 
-  text_layer_init(&text_daywk_layer, window.layer.frame);
-  text_layer_set_text_color(&text_daywk_layer, GColorWhite);
-  text_layer_set_background_color(&text_daywk_layer, GColorClear);
-  layer_set_frame(&text_daywk_layer.layer, GRect(8, 135, 144-8, 168-135));
-  text_layer_set_font(&text_daywk_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
-  layer_add_child(&window.layer, &text_daywk_layer.layer);
+  text_layer_init(&text_day_layer, window.layer.frame);
+  text_layer_set_text_color(&text_day_layer, GColorWhite);
+  text_layer_set_background_color(&text_day_layer, GColorClear);
+  layer_set_frame(&text_day_layer.layer, GRect(8, 135, 144-8, 168-135));
+  text_layer_set_font(&text_day_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
+  layer_add_child(&window.layer, &text_day_layer.layer);
+
+  text_layer_init(&text_wk_layer, window.layer.frame);
+  text_layer_set_text_color(&text_wk_layer, GColorWhite);
+  text_layer_set_background_color(&text_wk_layer, GColorClear);
+  layer_set_frame(&text_wk_layer.layer, GRect(130, 2, 144-2, 14));
+  text_layer_set_font(&text_wk_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
+  layer_add_child(&window.layer, &text_wk_layer.layer);
 
   // load watchface immediately
   PblTm t;
